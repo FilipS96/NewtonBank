@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testnewtonbank.FXMLController">
+  <children>
+    <ListView layoutX="79.0" layoutY="128.0" prefHeight="200.0" prefWidth="465.0" />
+    <Button layoutX="79.0" layoutY="32.0" mnemonicParsing="false" text="Return" />
+    <Label layoutX="238.0" layoutY="32.0" prefHeight="20.0" prefWidth="150.0" text="You have deleted:" textOverrun="CLIP">
+      <font>
+        <Font name="System Bold" size="16.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label layoutX="358.0" layoutY="32.0" text="">
+      <font>
+        <Font size="16.0" />
+      </font>
+    </Label>
+    <Slider layoutX="537.0" layoutY="128.0" orientation="VERTICAL" prefHeight="200.0" />
+    <Label font="$x1" layoutX="79.0" layoutY="106.0" text="Account Number:" />
+  </children>
+  <stylesheets>
+    <URL value="@fxml.css" />
+  </stylesheets>
+</AnchorPane>

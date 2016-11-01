@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testnewtonbank.FXMLDocumentController">
+    <children>
+        <Button id="registerCustomer" layoutX="99.0" layoutY="316.0" onAction="#registerAccount" prefHeight="35.0" prefWidth="127.0" text="Register account" />
+        <Label fx:id="label" layoutX="131.0" layoutY="230.0" minHeight="16" minWidth="69" prefHeight="54.0" prefWidth="224.0" />
+      <Button layoutX="256.0" layoutY="316.0" mnemonicParsing="false" onAction="#checkAccount" prefHeight="35.0" prefWidth="117.0" text="Check accounts" />
+      <TextField fx:id="name" layoutX="149.0" layoutY="66.0" prefHeight="27.0" prefWidth="224.0" />
+      <TextField fx:id="ssn" layoutX="149.0" layoutY="108.0" prefHeight="27.0" prefWidth="224.0" />
+      <Label layoutX="61.0" layoutY="71.0" text="Your Name: " />
+      <Label layoutX="61.0" layoutY="113.0" prefHeight="17.0" prefWidth="76.0" text="Your Ssn:" />
+    </children>
+</AnchorPane>
