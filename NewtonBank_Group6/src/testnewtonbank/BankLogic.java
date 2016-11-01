@@ -7,6 +7,10 @@ package testnewtonbank;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -211,5 +215,32 @@ public class BankLogic {
     }
     return customerInfo;
     }
+    
+    public void writeToTxt()
+    {
+        String content = " ";
+        for(String s : getCustomers()) {                //loopar genom listan
+            content += s + "\n";
+        }
+               
+        try {
+                File file = new File("./filename.txt");
 
+		// Om fil inte finns, så skapas den.
+		if (!file.exists()) {
+                    file.createNewFile();
+		}
+
+                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                try (BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(content);
+                }
+
+		System.out.println("Done");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
 }

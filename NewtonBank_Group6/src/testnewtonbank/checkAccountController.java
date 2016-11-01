@@ -141,6 +141,12 @@ public class checkAccountController implements Initializable {
     }
     }
     
+    @FXML
+    private void saveTxt(ActionEvent event){
+        p.writeToTxt();
+        
+    }
+    
      @FXML
     private void addSavingsAcc(ActionEvent event){
         p.addSavingsAccount(tempCust.getSsn());
