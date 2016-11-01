@@ -94,7 +94,7 @@
                   </RadialGradient>
                </textFill>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" text="Remove">
+            <Button mnemonicParsing="false" onAction="#removeCust" prefHeight="27.0" prefWidth="85.0" text="Remove">
                <textFill>
                   <LinearGradient endY="0.23557692307692313">
                      <stops>

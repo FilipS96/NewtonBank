@@ -153,7 +153,12 @@ public class checkAccountController implements Initializable {
         
     }
 
-    
+     @FXML
+    private void removeCust(ActionEvent event){
+        p.removeCustomer(tempCust.getSsn());
+        checkAccountController.customer = FXCollections.observableArrayList(p.getCustomers());
+        cust.setItems(customer);
+    }
     
     
     
