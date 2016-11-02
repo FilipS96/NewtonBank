@@ -166,12 +166,13 @@ public class checkAccountController implements Initializable {
     @FXML
     private void withdraw(ActionEvent event){
         double amount2 = Double.parseDouble(amount.getText());
-        p.withdraw(tempCust.getSsn(), 1002, amount2);
+        p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
     }
     
     @FXML
     private void deposit(ActionEvent event){
-        p.writeToTxt();
+        double amount2 = Double.parseDouble(amount.getText());
+        p.deposit(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
         
     }
 
