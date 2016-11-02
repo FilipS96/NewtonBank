@@ -74,6 +74,8 @@ public class checkAccountController implements Initializable {
     @FXML
     private HBox depositWithdraw;
     @FXML
+    private TextField amount;
+    @FXML
     public static ObservableList<String> accounts = FXCollections.observableArrayList();
     @FXML
     private Label showNr;
