@@ -29,8 +29,8 @@
       <Label fx:id="showInterest" layoutX="313.0" layoutY="395.0" prefHeight="17.0" prefWidth="200.0" text="Interest rate: " />
       <HBox fx:id="depositWithdraw" layoutX="316.0" layoutY="274.0" prefHeight="35.0" prefWidth="230.0" spacing="5.0">
          <children>
-            <TextField prefHeight="27.0" prefWidth="68.0" promptText="Amount" />
-            <Button mnemonicParsing="false" text="Withdraw">
+            <TextField fx:id="amount" prefHeight="27.0" prefWidth="68.0" promptText="Amount" />
+            <Button mnemonicParsing="false" onAction="#withdraw" text="Withdraw">
                <textFill>
                   <RadialGradient centerX="0.7134831460674157" centerY="0.798076923076923" radius="0.5">
                      <stops>
@@ -40,7 +40,7 @@
                   </RadialGradient>
                </textFill>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="74.0" text="Deposit">
+            <Button mnemonicParsing="false" onAction="#deposit" prefHeight="27.0" prefWidth="74.0" text="Deposit">
                <textFill>
                   <RadialGradient centerX="0.7134831460674157" centerY="0.798076923076923" radius="0.5">
                      <stops>

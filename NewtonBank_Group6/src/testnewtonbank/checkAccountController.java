@@ -162,6 +162,18 @@ public class checkAccountController implements Initializable {
         p.writeToTxt();
 
     }
+    
+    @FXML
+    private void withdraw(ActionEvent event){
+        double amount2 = Double.parseDouble(amount.getText());
+        p.withdraw(tempCust.getSsn(), 1002, amount2);
+    }
+    
+    @FXML
+    private void deposit(ActionEvent event){
+        p.writeToTxt();
+        
+    }
 
     @FXML
     private void addSavingsAcc(ActionEvent event) {
