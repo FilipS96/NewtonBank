@@ -11,17 +11,22 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  *
  * @author skate
  */
 public class BankLogic {
-
+    private static BankLogic p = new BankLogic();
     private ArrayList<Customer> customerList = new ArrayList();
     private Customer d;
-
-    public BankLogic() {
+    
+    public static BankLogic getInstanceOf(){
+        return p;
+    }
+    
+    private BankLogic() {
 
     }
 
@@ -40,7 +45,7 @@ public class BankLogic {
         
             
             
-            if(c.getSsn() == ssn){
+            if(ssn.equals(c.getSsn())){
                 
                 flag = false;
             } 
@@ -90,7 +95,7 @@ public class BankLogic {
     public boolean deposit(Long ssn, int accountNo, double amount) {
         for(Customer c : customerList){
             if(c.getSsn() == ssn){
-            for(SavingsAccount sa : c.getNumberOfAccount()){
+            for(SavingsAccount sa : c.getNumberOfAccount()){//FIXA!!!!!!!
             sa.setBalance(sa.getBalance() + amount);
             return true;
             }
@@ -216,7 +221,7 @@ public class BankLogic {
     return customerInfo;
     }
     
-    public void writeToTxt()
+    public String writeToTxt()
     {
         String content = " ";
         for(String s : getCustomers()) {                //loopar genom listan
@@ -236,10 +241,10 @@ public class BankLogic {
                 bw.write(content);
                 }
 
-		System.out.println("Done");
+		return "Customer list saved to file";
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			return "Error saving to file";
 		}
     }
     

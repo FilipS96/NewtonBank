@@ -42,14 +42,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import static testnewtonbank.FXMLDocumentController.p;
+//import static testnewtonbank.FXMLDocumentController.p;
 
 /**
  *
  * @author skate
  */
 public class checkAccountController implements Initializable {
-
+    @FXML
+    BankLogic p = BankLogic.getInstanceOf();
     public static int addHardCodedCostumers = 0;
     private Customer tempCust = new Customer();
     private SavingsAccount tempAccount = new SavingsAccount();
@@ -105,7 +106,7 @@ public class checkAccountController implements Initializable {
 //            accountView.setItems(null);
             accounts.clear();
 
-            for (Customer c : FXMLDocumentController.p.getCustomerList()) {
+            for (Customer c : p.getCustomerList()) {
 
                 String str = (String) cust.getSelectionModel().getSelectedItem();
 
@@ -143,15 +144,16 @@ public class checkAccountController implements Initializable {
 
             for (SavingsAccount a : tempCust.getNumberOfAccount()) {
 
-                String str = (String) cust.getSelectionModel().getSelectedItem();
+                String str = (String) accountView.getSelectionModel().getSelectedItem();
 
                 if (Integer.parseInt(str.substring(0, 4)) == a.getAccountNo()) {
                     tempAccount = a;
-                    showNr.setText("Number: " + a.getAccountNo());
+                    System.out.println(str);
+                    showNr.setText("Number:\t" + a.getAccountNo());
 
-                    showBalance.setText("Balance: " + a.getBalance());
+                    showBalance.setText("Balance:\t" + a.getBalance());
 
-                    showInterest.setText("Interest rate: " + a.getInterestRate());
+                    showInterest.setText("Interest rate:\t" + a.getInterestRate());
                 }
             }
         }
@@ -167,18 +169,29 @@ public class checkAccountController implements Initializable {
     private void withdraw(ActionEvent event){
         double amount2 = Double.parseDouble(amount.getText());
         p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+        System.out.println(tempAccount.getBalance());
+        showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
     }
     
     @FXML
     private void deposit(ActionEvent event){
         double amount2 = Double.parseDouble(amount.getText());
         p.deposit(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
-        
+        System.out.println(tempAccount.getBalance());
+        showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+
     }
 
     @FXML
     private void addSavingsAcc(ActionEvent event) {
         p.addSavingsAccount(tempCust.getSsn());
+        
+        ArrayList<String> newAccounts = new ArrayList();
+        for (SavingsAccount sa : tempCust.getNumberOfAccount()) {
+                newAccounts.add(sa.getAccountNo() + " " + sa.getAccountType());
+                    }
+       checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
+        accountView.setItems(accounts);
 
     }
 
