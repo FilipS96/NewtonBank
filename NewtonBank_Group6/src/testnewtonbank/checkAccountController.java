@@ -41,6 +41,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 //import static testnewtonbank.FXMLDocumentController.p;
 
@@ -69,6 +70,8 @@ public class checkAccountController implements Initializable {
     @FXML
     private Label showAccount;
     @FXML
+    private Button removeCust;
+    @FXML
     private Button removeSavingsAcc;
     @FXML
     private Button addSavingsAcc;
@@ -81,9 +84,14 @@ public class checkAccountController implements Initializable {
     @FXML
     private Label showNr;
     @FXML
+    private Label depWithLabel;
+    @FXML
     private Label showBalance;
     @FXML
     private Label showInterest;
+    @FXML
+    private Label removedAccountLabel;
+    
     @FXML
     private ObservableList customerList;
 
@@ -99,8 +107,12 @@ public class checkAccountController implements Initializable {
 
     @FXML
     private void seeAccountInfo(MouseEvent event) {
-
+        depWithLabel.setVisible(false);
+        removeSavingsAcc.setVisible(false);
+        depositWithdraw.setVisible(false);
+        removedAccountLabel.setVisible(false);
         if (cust.getSelectionModel().getSelectedItem() != null) {
+            removeCust.setVisible(true);
             accountView.setVisible(true);
             addSavingsAcc.setVisible(true);
 //            accountView.setItems(null);
@@ -133,8 +145,9 @@ public class checkAccountController implements Initializable {
     //SAVINGS ACCOUNT INFORMATION
     @FXML
     private void seeSavingsAccount(MouseEvent event) {
-
-        if (cust.getSelectionModel().getSelectedItem() != null) {
+        depWithLabel.setVisible(false);
+        removedAccountLabel.setVisible(false);
+        if (accountView.getSelectionModel().getSelectedItem() != null) {
 
             removeSavingsAcc.setVisible(true);
             depositWithdraw.setVisible(true);
@@ -166,24 +179,69 @@ public class checkAccountController implements Initializable {
     }
     
     @FXML
+    private void removeSavingAcc(ActionEvent event){
+        
+        
+        removeSavingsAcc.setVisible(false);
+        depositWithdraw.setVisible(false);
+        removedAccountLabel.setVisible(true);
+        showBalance.setVisible(false);
+        showInterest.setVisible(false);
+        showNr.setVisible(false);
+        removedAccountLabel.setText("You removed acc " + String.valueOf(tempAccount.getAccountNo() + "\n" 
+                + "From customer " + tempCust.getName() + "\n" + "Closing balance : " + 
+                String.valueOf(tempAccount.getClosingBalance())));
+        
+        
+        ArrayList<String> newAccounts = new ArrayList();
+         if (cust.getSelectionModel().getSelectedItem() != null){
+                p.closeAccount(tempCust.getSsn(),tempAccount.getAccountNo());
+                    
+                for(SavingsAccount c : tempCust.getNumberOfAccount()){
+                newAccounts.add(c.getAccountNo() + " " + c.getAccountType());
+                
+                }
+                
+       checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
+        accountView.setItems(accounts);
+         }
+    }
+    
+    @FXML
     private void withdraw(ActionEvent event){
         double amount2 = Double.parseDouble(amount.getText());
-        p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+        boolean b = p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+        if(b){
+            depWithLabel.setVisible(true);
+            depWithLabel.setText("Withdrawal succeeded");
+            depWithLabel.setTextFill(Color.web("green"));
+        }else{
+            depWithLabel.setVisible(true);
+            depWithLabel.setText("Your balance is too low");
+            depWithLabel.setTextFill(Color.web("red"));
+        }
         System.out.println(tempAccount.getBalance());
         showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+        amount.clear();
     }
     
     @FXML
     private void deposit(ActionEvent event){
         double amount2 = Double.parseDouble(amount.getText());
+        System.out.println(tempAccount.getAccountNo());
         p.deposit(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
         System.out.println(tempAccount.getBalance());
         showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+        amount.clear();
 
     }
 
     @FXML
     private void addSavingsAcc(ActionEvent event) {
+        removeSavingsAcc.setVisible(false);
+        depositWithdraw.setVisible(false);
+        removedAccountLabel.setVisible(false);
+        removeSavingsAcc.setVisible(false);
         p.addSavingsAccount(tempCust.getSsn());
         
         ArrayList<String> newAccounts = new ArrayList();
@@ -192,6 +250,7 @@ public class checkAccountController implements Initializable {
                     }
        checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
         accountView.setItems(accounts);
+        //accountView.setSelectionModel();
 
     }
 
@@ -224,7 +283,10 @@ public class checkAccountController implements Initializable {
 
         }
         addHardCodedCostumers++;
-
+        
+        removedAccountLabel.setVisible(false);
+        removeCust.setVisible(false);
+        depWithLabel.setVisible(false);
         accountView.setVisible(false);
         addSavingsAcc.setVisible(false);
         removeSavingsAcc.setVisible(false);

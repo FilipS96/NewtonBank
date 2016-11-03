@@ -18,14 +18,15 @@ import java.util.Objects;
  * @author skate
  */
 public class BankLogic {
+
     private static BankLogic p = new BankLogic();
     private ArrayList<Customer> customerList = new ArrayList();
     private Customer d;
-    
-    public static BankLogic getInstanceOf(){
+
+    public static BankLogic getInstanceOf() {
         return p;
     }
-    
+
     private BankLogic() {
 
     }
@@ -39,29 +40,25 @@ public class BankLogic {
     }
 
     public boolean addCustomer(String name, Long ssn) {
-        
+
         boolean flag = true;
-        for(Customer c : customerList){
-        
-            
-            
-            if(ssn.equals(c.getSsn())){
-                
+        for (Customer c : customerList) {
+
+            if (ssn.equals(c.getSsn())) {
+
                 flag = false;
-            } 
+            }
         }
-        
-        if(flag){
-        customerList.add(new Customer(name, ssn));
+
+        if (flag) {
+            customerList.add(new Customer(name, ssn));
         }
-        
-        
 
         return flag;
 
     }
-     
-    public List<String> getCostumer(long ssn){
+
+    public List<String> getCostumer(long ssn) {
 
         List<String> cust = new ArrayList<>();
         for (Customer c : customerList) {
@@ -93,15 +90,19 @@ public class BankLogic {
     }
 
     public boolean deposit(Long ssn, int accountNo, double amount) {
-        for(Customer c : customerList){
-            if(c.getSsn() == ssn){
-            for(SavingsAccount sa : c.getNumberOfAccount()){//FIXA!!!!!!!
-            sa.setBalance(sa.getBalance() + amount);
-            return true;
-            }
+        boolean flag = false;
+        for (Customer c : customerList) {
+            if (c.getSsn() == ssn) {
+                for (SavingsAccount sa : c.getNumberOfAccount()) {
+                    if (sa.getAccountNo() == accountNo) {
+                        sa.setBalance(sa.getBalance() + amount);
+                        flag = true;
+                    }
+
+                }
             }
         }
-        return false;
+        return flag;
     }
 
     public List<String> removeCustomer(long ssn) {
@@ -114,13 +115,12 @@ public class BankLogic {
                 for (SavingsAccount sa : c.getNumberOfAccount()) {
                     rm.add(sa.getAccountNo() + " " + sa.getAccountType() + " " + sa.getBalance() + " " + sa.getClosingBalance());
                 }
-                
-                
+
             }
 
         }
         customerList.remove(temp);
-        
+
         return rm;
 
     }
@@ -161,8 +161,6 @@ public class BankLogic {
 // Returvärde: true om insättningen lyckades annars false
 //----------------------------------------------------------------------
     public boolean withdraw(long ssn, int accountNo, double amount) {
-
-        double balance = 0;
         boolean flag = false;
 
         for (Customer customer : customerList) {
@@ -174,10 +172,8 @@ public class BankLogic {
                             flag = true;
                         }
                     }
-                    return false;
                 }
             }
-            return false;
         }
         return flag;
     }
@@ -212,40 +208,39 @@ public class BankLogic {
             return "Couldn't delete account.";
         }
     }
-    
-    public List<String> getCustomers(){
-     List<String> customerInfo = new ArrayList();   
-    for(Customer c : customerList){
-        customerInfo.add(c.getName() + " -- " + c.getSsn());
+
+    public List<String> getCustomers() {
+        List<String> customerInfo = new ArrayList();
+        for (Customer c : customerList) {
+            customerInfo.add(c.getName() + " -- " + c.getSsn());
+        }
+        return customerInfo;
     }
-    return customerInfo;
-    }
-    
-    public String writeToTxt()
-    {
-        String content = " ";
-        for(String s : getCustomers()) {                //loopar genom listan
+
+    public String writeToTxt() {
+        String content = "";
+        for (String s : getCustomers()) {                //loopar genom listan
             content += s + "\n";
         }
-               
+
         try {
-                File file = new File("./filename.txt");
+            File file = new File("./filename.txt");
 
-		// Om fil inte finns, så skapas den.
-		if (!file.exists()) {
-                    file.createNewFile();
-		}
+            // Om fil inte finns, så skapas den.
+            if (!file.exists()) {
+                file.createNewFile();
+            }
 
-                FileWriter fw = new FileWriter(file.getAbsoluteFile());
-                try (BufferedWriter bw = new BufferedWriter(fw)) {
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            try (BufferedWriter bw = new BufferedWriter(fw)) {
                 bw.write(content);
-                }
+            }
 
-		return "Customer list saved to file";
+            return "Customer list saved to file";
 
-		} catch (IOException e) {
-			return "Error saving to file";
-		}
+        } catch (IOException e) {
+            return "Error saving to file";
+        }
     }
-    
+
 }

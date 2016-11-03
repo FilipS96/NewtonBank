@@ -54,7 +54,7 @@
       </HBox>
       <VBox layoutX="554.0" layoutY="187.0" prefHeight="80.0" prefWidth="74.0" spacing="5.0">
          <children>
-            <Button fx:id="removeSavingsAcc" mnemonicParsing="false" prefHeight="27.0" prefWidth="90.0" text="Remove">
+            <Button fx:id="removeSavingsAcc" mnemonicParsing="false" onAction="#removeSavingAcc" prefHeight="27.0" prefWidth="90.0" text="Remove">
                <textFill>
                   <RadialGradient centerX="0.7134831460674157" centerY="0.798076923076923" radius="0.5">
                      <stops>
@@ -94,7 +94,8 @@
                   </RadialGradient>
                </textFill>
             </Button>
-            <Button mnemonicParsing="false" onAction="#removeCust" prefHeight="27.0" prefWidth="85.0" text="Remove">
+            <Button mnemonicParsing="false" onAction="#saveTxt" prefHeight="27.0" prefWidth="102.0" text="Save .txt" />
+            <Button fx:id="removeCust" mnemonicParsing="false" onAction="#removeCust" prefHeight="27.0" prefWidth="85.0" text="Remove">
                <textFill>
                   <LinearGradient endY="0.23557692307692313">
                      <stops>
@@ -104,8 +105,9 @@
                   </LinearGradient>
                </textFill>
             </Button>
-            <Button mnemonicParsing="false" onAction="#saveTxt" prefHeight="27.0" prefWidth="102.0" text="Save .txt" />
          </children>
       </VBox>
+      <Label fx:id="depWithLabel" layoutX="320.0" layoutY="309.0" prefHeight="17.0" prefWidth="223.0" />
+      <Label fx:id="removedAccountLabel" layoutX="315.0" layoutY="326.0" prefHeight="117.0" prefWidth="310.0" />
     </children>
 </AnchorPane>
