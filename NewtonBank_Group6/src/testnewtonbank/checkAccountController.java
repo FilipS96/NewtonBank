@@ -76,6 +76,8 @@ public class checkAccountController implements Initializable {
     @FXML
     private Button addSavingsAcc;
     @FXML
+    private Button changeName;
+    @FXML
     private HBox depositWithdraw;
     @FXML
     private TextField amount;
@@ -179,6 +181,17 @@ public class checkAccountController implements Initializable {
     }
     
     @FXML
+    private void editName(ActionEvent event) throws IOException{
+        cust.getSelectionModel().getSelectedItem();
+        
+        Parent root = FXMLLoader.load(getClass().getResource("editName.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        
+    }
+    
+    @FXML
     private void removeSavingAcc(ActionEvent event){
         
         
@@ -255,10 +268,16 @@ public class checkAccountController implements Initializable {
     }
 
     @FXML
-    private void removeCust(ActionEvent event) {
+    private void removeCust(ActionEvent event) throws IOException {
         p.removeCustomer(tempCust.getSsn());
         checkAccountController.customer = FXCollections.observableArrayList(p.getCustomers());
         cust.setItems(customer);
+        
+        Parent root = FXMLLoader.load(getClass().getResource("taBortKundInfo.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        
     }
 
     @Override

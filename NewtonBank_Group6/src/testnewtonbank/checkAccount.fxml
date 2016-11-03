@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="497.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testnewtonbank.checkAccountController">
+<AnchorPane id="AnchorPane" prefHeight="497.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testnewtonbank.checkAccountController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <ListView fx:id="cust" layoutX="97.0" layoutY="30.0" onMouseClicked="#seeAccountInfo" prefHeight="414.0" prefWidth="200.0" />
@@ -95,6 +95,7 @@
                </textFill>
             </Button>
             <Button mnemonicParsing="false" onAction="#saveTxt" prefHeight="27.0" prefWidth="102.0" text="Save .txt" />
+            <Button fx:id="changeName" mnemonicParsing="false" onAction="#editName" prefHeight="27.0" prefWidth="89.0" text="Change name" />
             <Button fx:id="removeCust" mnemonicParsing="false" onAction="#removeCust" prefHeight="27.0" prefWidth="85.0" text="Remove">
                <textFill>
                   <LinearGradient endY="0.23557692307692313">
