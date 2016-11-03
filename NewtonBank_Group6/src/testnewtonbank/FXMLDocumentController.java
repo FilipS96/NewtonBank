@@ -63,11 +63,17 @@ public class FXMLDocumentController implements Initializable {
             if (ssn.getText().isEmpty() || name.getText().isEmpty()) {
                 label.setTextFill(Color.web("red"));
                 label.setText("Please you need to enter a name");
+            } else if (!name.getText().matches("[a-zA-Z ]+")) {
+                label.setTextFill(Color.web("red"));
+                label.setText("You cant have a number in your name");
             } else if (String.valueOf(ssn.getText()).length() != 12) {
-                label.setText("Please enter a 10 digit social security number with the format YYYYMMDDNNNN.");
+                label.setTextFill(Color.web("red"));
+                label.setText("Please enter a 10 digit social security number.");
             } else if (Integer.parseInt(ssn.getText().substring(0, 4)) > 2016 || Integer.parseInt(ssn.getText().substring(0, 4)) < 1900) {
+                label.setTextFill(Color.web("red"));
                 label.setText("You need to enter a year between 1900 and 2016");
             } else if (Integer.parseInt(ssn.getText().substring(4, 6)) > 12 || Integer.parseInt(ssn.getText().substring(4, 6)) < 1) {
+                label.setTextFill(Color.web("red"));
                 label.setText("Please enter a month between 01-12");
                 System.out.println(ssn.getText().substring(4, 6));
             } else {
@@ -90,20 +96,8 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-//        if(addHardCodedCostumers < 1){
-//        
-//        ssn.setPromptText("YYYYMMDDNNNN");
-//        name.setPromptText("First and last name");
-//        p.addCustomer("Hampus", 199112253519L);
-//     
-//        p.addCustomer("Joel", 199112245401L);
-//        
-//        p.addCustomer("Alexiz", 199112253192L);
-//        ++addHardCodedCostumers;
-//        }
-//        customer = FXCollections.observableArrayList(p.getCustomers());
-//        
+        ssn.setPromptText("YYYYMMDDNNNN");
+        name.setPromptText("e.g. John Doe");
     }
 
 }

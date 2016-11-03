@@ -109,12 +109,12 @@ public class BankLogic {
         List<String> rm = new ArrayList();
         Customer temp = new Customer();
         for (Customer c : customerList) {
-            if (c.getSsn() == ssn) {
+            if (c.getSsn().equals(ssn)) {
                 temp = c;
-                rm.add("We removed " + c.getName() + " ssn = " + c.getSsn());
                 for (SavingsAccount sa : c.getNumberOfAccount()) {
-                    rm.add(sa.getAccountNo() + " " + sa.getAccountType() + " " + sa.getBalance() + " " + sa.getClosingBalance());
+                    rm.add(sa.getAccountNo() + " " + sa.getAccountType() + " Balance: " + sa.getClosingBalance() + " of which " + (sa.getClosingBalance() - sa.getBalance()) + " is interest.\n\n");
                 }
+                rm.add("\n");
 
             }
 

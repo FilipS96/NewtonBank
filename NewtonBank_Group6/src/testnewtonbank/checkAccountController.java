@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,11 +51,13 @@ import javafx.stage.Stage;
  * @author skate
  */
 public class checkAccountController implements Initializable {
+
     @FXML
     BankLogic p = BankLogic.getInstanceOf();
     public static int addHardCodedCostumers = 0;
-    private Customer tempCust = new Customer();
+    private static Customer tempCust = new Customer();
     private SavingsAccount tempAccount = new SavingsAccount();
+    private static List<String> closingInfo = new ArrayList();
 
     @FXML
     public static ObservableList<String> customer = FXCollections.observableArrayList();
@@ -93,7 +96,7 @@ public class checkAccountController implements Initializable {
     private Label showInterest;
     @FXML
     private Label removedAccountLabel;
-    
+
     @FXML
     private ObservableList customerList;
 
@@ -179,72 +182,88 @@ public class checkAccountController implements Initializable {
         p.writeToTxt();
 
     }
-    
+
     @FXML
-    private void editName(ActionEvent event) throws IOException{
+    private void editName(ActionEvent event) throws IOException {
         cust.getSelectionModel().getSelectedItem();
-        
+
         Parent root = FXMLLoader.load(getClass().getResource("editName.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
-        
+
     }
-    
+
     @FXML
-    private void removeSavingAcc(ActionEvent event){
-        
-        
+    private void removeSavingAcc(ActionEvent event) {
+
         removeSavingsAcc.setVisible(false);
         depositWithdraw.setVisible(false);
         removedAccountLabel.setVisible(true);
         showBalance.setVisible(false);
         showInterest.setVisible(false);
         showNr.setVisible(false);
-        removedAccountLabel.setText("You removed acc " + String.valueOf(tempAccount.getAccountNo() + "\n" 
-                + "From customer " + tempCust.getName() + "\n" + "Closing balance : " + 
-                String.valueOf(tempAccount.getClosingBalance())));
-        
-        
+        removedAccountLabel.setText("You removed acc " + String.valueOf(tempAccount.getAccountNo() + "\n"
+                + "From customer " + tempCust.getName() + "\n" + "Closing balance : "
+                + String.valueOf(tempAccount.getClosingBalance())));
+
         ArrayList<String> newAccounts = new ArrayList();
-         if (cust.getSelectionModel().getSelectedItem() != null){
-                p.closeAccount(tempCust.getSsn(),tempAccount.getAccountNo());
-                    
-                for(SavingsAccount c : tempCust.getNumberOfAccount()){
+        if (cust.getSelectionModel().getSelectedItem() != null) {
+            p.closeAccount(tempCust.getSsn(), tempAccount.getAccountNo());
+
+            for (SavingsAccount c : tempCust.getNumberOfAccount()) {
                 newAccounts.add(c.getAccountNo() + " " + c.getAccountType());
-                
-                }
-                
-       checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
-        accountView.setItems(accounts);
-         }
-    }
-    
-    @FXML
-    private void withdraw(ActionEvent event){
-        double amount2 = Double.parseDouble(amount.getText());
-        boolean b = p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
-        if(b){
-            depWithLabel.setVisible(true);
-            depWithLabel.setText("Withdrawal succeeded");
-            depWithLabel.setTextFill(Color.web("green"));
-        }else{
-            depWithLabel.setVisible(true);
-            depWithLabel.setText("Your balance is too low");
-            depWithLabel.setTextFill(Color.web("red"));
+
+            }
+
+            checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
+            accountView.setItems(accounts);
         }
-        System.out.println(tempAccount.getBalance());
-        showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+    }
+
+    @FXML
+    private void withdraw(ActionEvent event) {
+        depWithLabel.setVisible(false);
+        if (!amount.getText().matches("[-+]?[0-9]*.?[0-9]+")) {
+            depWithLabel.setVisible(true);
+            depWithLabel.setTextFill(Color.web("red"));
+            depWithLabel.setText("Please enter a valid number");
+        } else {
+            double amount2 = Double.parseDouble(amount.getText());
+            boolean b = p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+            if (b) {
+                depWithLabel.setVisible(true);
+                depWithLabel.setText("Withdrawal succeeded");
+                depWithLabel.setTextFill(Color.web("green"));
+            } else {
+                depWithLabel.setVisible(true);
+                depWithLabel.setText("Your balance is too low");
+                depWithLabel.setTextFill(Color.web("red"));
+            }
+            System.out.println(tempAccount.getBalance());
+            showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+        }
         amount.clear();
     }
-    
+
     @FXML
-    private void deposit(ActionEvent event){
-        double amount2 = Double.parseDouble(amount.getText());
-        System.out.println(tempAccount.getAccountNo());
-        p.deposit(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
-        System.out.println(tempAccount.getBalance());
-        showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+    private void deposit(ActionEvent event) {
+        depWithLabel.setVisible(false);
+        if (!amount.getText().matches("[-+]?[0-9]*.?[0-9]+")) {
+            depWithLabel.setVisible(true);
+            depWithLabel.setTextFill(Color.web("red"));
+            depWithLabel.setText("Please enter a valid number");
+        } else {
+            double amount2 = Double.parseDouble(amount.getText());
+            System.out.println(tempAccount.getAccountNo());
+            p.deposit(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+            System.out.println(tempAccount.getBalance());
+            showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+            depWithLabel.setVisible(true);
+            depWithLabel.setTextFill(Color.web("green"));
+            depWithLabel.setText("Deposit succeeded");
+        }
+
         amount.clear();
 
     }
@@ -256,12 +275,12 @@ public class checkAccountController implements Initializable {
         removedAccountLabel.setVisible(false);
         removeSavingsAcc.setVisible(false);
         p.addSavingsAccount(tempCust.getSsn());
-        
+
         ArrayList<String> newAccounts = new ArrayList();
         for (SavingsAccount sa : tempCust.getNumberOfAccount()) {
-                newAccounts.add(sa.getAccountNo() + " " + sa.getAccountType());
-                    }
-       checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
+            newAccounts.add(sa.getAccountNo() + " " + sa.getAccountType());
+        }
+        checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
         accountView.setItems(accounts);
         //accountView.setSelectionModel();
 
@@ -269,15 +288,23 @@ public class checkAccountController implements Initializable {
 
     @FXML
     private void removeCust(ActionEvent event) throws IOException {
-        p.removeCustomer(tempCust.getSsn());
+        closingInfo = p.removeCustomer(tempCust.getSsn());
         checkAccountController.customer = FXCollections.observableArrayList(p.getCustomers());
         cust.setItems(customer);
-        
+
         Parent root = FXMLLoader.load(getClass().getResource("taBortKundInfo.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
-        
+
+    }
+
+    public static Customer getTempCust() {
+        return tempCust;
+    }
+
+    public static List<String> getClosingInfo() {
+        return closingInfo;
     }
 
     @Override
@@ -302,7 +329,7 @@ public class checkAccountController implements Initializable {
 
         }
         addHardCodedCostumers++;
-        
+
         removedAccountLabel.setVisible(false);
         removeCust.setVisible(false);
         depWithLabel.setVisible(false);

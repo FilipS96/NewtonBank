@@ -46,7 +46,8 @@ public class SavingsAccount {
         this.interestRate = interest;
     }
     public double getClosingBalance() {
-        return balance *= (1 + (interestRate / 100));
+        double closingBalance = balance * (1 + (interestRate / 100));
+        return closingBalance;
     }
 
     public String getAccountType() {
