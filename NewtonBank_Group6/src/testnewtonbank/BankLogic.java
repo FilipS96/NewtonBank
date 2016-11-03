@@ -7,17 +7,26 @@ package testnewtonbank;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  *
  * @author skate
  */
 public class BankLogic {
-
+    private static BankLogic p = new BankLogic();
     private ArrayList<Customer> customerList = new ArrayList();
     private Customer d;
-
-    public BankLogic() {
+    
+    public static BankLogic getInstanceOf(){
+        return p;
+    }
+    
+    private BankLogic() {
 
     }
 
@@ -36,7 +45,7 @@ public class BankLogic {
         
             
             
-            if(c.getSsn() == ssn){
+            if(ssn.equals(c.getSsn())){
                 
                 flag = false;
             } 
@@ -86,7 +95,7 @@ public class BankLogic {
     public boolean deposit(Long ssn, int accountNo, double amount) {
         for(Customer c : customerList){
             if(c.getSsn() == ssn){
-            for(SavingsAccount sa : c.getNumberOfAccount()){
+            for(SavingsAccount sa : c.getNumberOfAccount()){//FIXA!!!!!!!
             sa.setBalance(sa.getBalance() + amount);
             return true;
             }
@@ -211,5 +220,32 @@ public class BankLogic {
     }
     return customerInfo;
     }
+    
+    public String writeToTxt()
+    {
+        String content = " ";
+        for(String s : getCustomers()) {                //loopar genom listan
+            content += s + "\n";
+        }
+               
+        try {
+                File file = new File("./filename.txt");
 
+		// Om fil inte finns, så skapas den.
+		if (!file.exists()) {
+                    file.createNewFile();
+		}
+
+                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                try (BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(content);
+                }
+
+		return "Customer list saved to file";
+
+		} catch (IOException e) {
+			return "Error saving to file";
+		}
+    }
+    
 }

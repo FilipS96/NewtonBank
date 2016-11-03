@@ -42,20 +42,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import static testnewtonbank.FXMLDocumentController.p;
+//import static testnewtonbank.FXMLDocumentController.p;
 
 /**
  *
  * @author skate
  */
 public class checkAccountController implements Initializable {
-
+    @FXML
+    BankLogic p = BankLogic.getInstanceOf();
     public static int addHardCodedCostumers = 0;
     private Customer tempCust = new Customer();
-    
+    private SavingsAccount tempAccount = new SavingsAccount();
+
     @FXML
     public static ObservableList<String> customer = FXCollections.observableArrayList();
-    
+
     @FXML
     private ListView cust;
     @FXML
@@ -72,6 +74,8 @@ public class checkAccountController implements Initializable {
     private Button addSavingsAcc;
     @FXML
     private HBox depositWithdraw;
+    @FXML
+    private TextField amount;
     @FXML
     public static ObservableList<String> accounts = FXCollections.observableArrayList();
     @FXML
@@ -92,6 +96,7 @@ public class checkAccountController implements Initializable {
 
     }
 // CUSTOMER INFORMATION 
+
     @FXML
     private void seeAccountInfo(MouseEvent event) {
 
@@ -101,7 +106,7 @@ public class checkAccountController implements Initializable {
 //            accountView.setItems(null);
             accounts.clear();
 
-            for (Customer c : FXMLDocumentController.p.getCustomerList()) {
+            for (Customer c : p.getCustomerList()) {
 
                 String str = (String) cust.getSelectionModel().getSelectedItem();
 
@@ -117,40 +122,86 @@ public class checkAccountController implements Initializable {
                         accounts.add(sa.getAccountNo() + " " + sa.getAccountType());
                     }
                     accountView.setItems(accounts);
-                    
-               
+
                 }
 
             }
         }
 
     }
-    
+
     //SAVINGS ACCOUNT INFORMATION
     @FXML
-    private void seeSavingsAccount(MouseEvent event){
-        
+    private void seeSavingsAccount(MouseEvent event) {
+
         if (cust.getSelectionModel().getSelectedItem() != null) {
-        
-        removeSavingsAcc.setVisible(true);
-        depositWithdraw.setVisible(true);
-        showNr.setVisible(true);
-        showBalance.setVisible(true);
-        showInterest.setVisible(true);
-        
-    }
-    }
-    
-     @FXML
-    private void addSavingsAcc(ActionEvent event){
-        p.addSavingsAccount(tempCust.getSsn());
-        
+
+            removeSavingsAcc.setVisible(true);
+            depositWithdraw.setVisible(true);
+            showNr.setVisible(true);
+            showBalance.setVisible(true);
+            showInterest.setVisible(true);
+
+            for (SavingsAccount a : tempCust.getNumberOfAccount()) {
+
+                String str = (String) accountView.getSelectionModel().getSelectedItem();
+
+                if (Integer.parseInt(str.substring(0, 4)) == a.getAccountNo()) {
+                    tempAccount = a;
+                    System.out.println(str);
+                    showNr.setText("Number:\t" + a.getAccountNo());
+
+                    showBalance.setText("Balance:\t" + a.getBalance());
+
+                    showInterest.setText("Interest rate:\t" + a.getInterestRate());
+                }
+            }
+        }
     }
 
+    @FXML
+    private void saveTxt(ActionEvent event) {
+        p.writeToTxt();
+
+    }
     
+    @FXML
+    private void withdraw(ActionEvent event){
+        double amount2 = Double.parseDouble(amount.getText());
+        p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+        System.out.println(tempAccount.getBalance());
+        showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+    }
     
-    
-    
+    @FXML
+    private void deposit(ActionEvent event){
+        double amount2 = Double.parseDouble(amount.getText());
+        p.deposit(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+        System.out.println(tempAccount.getBalance());
+        showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+
+    }
+
+    @FXML
+    private void addSavingsAcc(ActionEvent event) {
+        p.addSavingsAccount(tempCust.getSsn());
+        
+        ArrayList<String> newAccounts = new ArrayList();
+        for (SavingsAccount sa : tempCust.getNumberOfAccount()) {
+                newAccounts.add(sa.getAccountNo() + " " + sa.getAccountType());
+                    }
+       checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
+        accountView.setItems(accounts);
+
+    }
+
+    @FXML
+    private void removeCust(ActionEvent event) {
+        p.removeCustomer(tempCust.getSsn());
+        checkAccountController.customer = FXCollections.observableArrayList(p.getCustomers());
+        cust.setItems(customer);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println(addHardCodedCostumers);
@@ -168,12 +219,12 @@ public class checkAccountController implements Initializable {
             p.addSavingsAccount(199112253192L);
             p.addSavingsAccount(199112253192L);
             p.addSavingsAccount(199112253192L);
-            
+
             System.out.println(addHardCodedCostumers);
-           
+
         }
         addHardCodedCostumers++;
-        
+
         accountView.setVisible(false);
         addSavingsAcc.setVisible(false);
         removeSavingsAcc.setVisible(false);
@@ -181,10 +232,9 @@ public class checkAccountController implements Initializable {
         showNr.setVisible(false);
         showBalance.setVisible(false);
         showInterest.setVisible(false);
-        
+
         checkAccountController.customer = FXCollections.observableArrayList(p.getCustomers());
         cust.setItems(customer);
-        
 
     }
 
