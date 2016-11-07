@@ -63,7 +63,7 @@ public class FXMLDocumentController implements Initializable {
             if (ssn.getText().isEmpty() || name.getText().isEmpty()) {
                 label.setTextFill(Color.web("red"));
                 label.setText("Please you need to enter a name");
-            } else if (!name.getText().matches("[a-zA-Z ]+")) {
+            } else if (!name.getText().matches("[a-zA-ZåäöÅÄÖ ]+")) {
                 label.setTextFill(Color.web("red"));
                 label.setText("You cant have a number in your name");
             } else if (String.valueOf(ssn.getText()).length() != 12) {

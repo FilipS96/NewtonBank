@@ -13,21 +13,20 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testnewtonbank.checkAccountController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testnewtonbank.checkAccountController">
     <children>
-        <Label fx:id="label" layoutX="149.0" layoutY="121.0" minHeight="16" minWidth="69" />
-      <ListView fx:id="cust" layoutX="120.0" layoutY="31.0" onMouseClicked="#seeAccountInfo" prefHeight="414.0" prefWidth="200.0" />
-      <Label fx:id="showName" layoutX="336.0" layoutY="44.0" prefHeight="17.0" prefWidth="200.0" />
-      <Label fx:id="showSsn" layoutX="338.0" layoutY="78.0" prefHeight="17.0" prefWidth="200.0" />
-      <Label fx:id="showAccount" layoutX="337.0" layoutY="105.0" prefHeight="23.0" prefWidth="200.0">
+      <ListView fx:id="cust" layoutX="120.0" layoutY="48.0" onMouseClicked="#seeAccountInfo" prefHeight="414.0" prefWidth="268.0" />
+      <Label fx:id="showName" layoutX="396.0" layoutY="43.0" prefHeight="17.0" prefWidth="200.0" />
+      <Label fx:id="showSsn" layoutX="398.0" layoutY="77.0" prefHeight="17.0" prefWidth="200.0" />
+      <Label fx:id="showAccount" layoutX="397.0" layoutY="104.0" prefHeight="23.0" prefWidth="200.0">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font></Label>
-      <ListView fx:id="accountView" layoutX="338.0" layoutY="137.0" onMouseClicked="#seeSavingsAccount" prefHeight="131.0" prefWidth="231.0" />
-      <Label fx:id="showNr" layoutX="341.0" layoutY="327.0" prefHeight="17.0" prefWidth="200.0" text="Number: " />
-      <Label fx:id="showBalance" layoutX="341.0" layoutY="352.0" prefHeight="17.0" prefWidth="200.0" text="Balance: " />
-      <Label fx:id="showInterest" layoutX="341.0" layoutY="377.0" prefHeight="17.0" prefWidth="200.0" text="Interest rate: " />
-      <HBox fx:id="depositWithdraw" layoutX="339.0" layoutY="275.0" prefHeight="35.0" prefWidth="230.0" spacing="5.0">
+      <ListView fx:id="accountView" layoutX="398.0" layoutY="136.0" onMouseClicked="#seeSavingsAccount" prefHeight="131.0" prefWidth="231.0" />
+      <Label fx:id="showNr" layoutX="401.0" layoutY="326.0" prefHeight="17.0" prefWidth="200.0" text="Number: " />
+      <Label fx:id="showBalance" layoutX="401.0" layoutY="351.0" prefHeight="17.0" prefWidth="200.0" text="Balance: " />
+      <Label fx:id="showInterest" layoutX="401.0" layoutY="376.0" prefHeight="17.0" prefWidth="200.0" text="Interest rate: " />
+      <HBox fx:id="depositWithdraw" layoutX="399.0" layoutY="274.0" prefHeight="35.0" prefWidth="230.0" spacing="5.0">
          <children>
             <TextField fx:id="amount" prefHeight="27.0" prefWidth="68.0" promptText="Amount" />
             <Button mnemonicParsing="false" onAction="#withdraw" text="Withdraw">
@@ -52,7 +51,7 @@
             </Button>
          </children>
       </HBox>
-      <VBox layoutX="577.0" layoutY="188.0" prefHeight="80.0" prefWidth="74.0" spacing="5.0">
+      <VBox layoutX="637.0" layoutY="187.0" prefHeight="80.0" prefWidth="74.0" spacing="5.0">
          <children>
             <Button fx:id="removeSavingsAcc" mnemonicParsing="false" onAction="#removeSavingAcc" prefHeight="27.0" prefWidth="90.0" text="Remove">
                <textFill>
@@ -82,7 +81,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox layoutX="9.0" layoutY="31.0" prefHeight="200.0" prefWidth="103.0" spacing="5.0">
+      <VBox layoutX="9.0" layoutY="48.0" prefHeight="200.0" prefWidth="103.0" spacing="5.0">
          <children>
             <Button mnemonicParsing="false" onAction="#addCustomer" prefHeight="27.0" prefWidth="153.0" text="Add">
                <textFill>
@@ -108,7 +107,12 @@
             </Button>
          </children>
       </VBox>
-      <Label fx:id="depWithLabel" layoutX="343.0" layoutY="310.0" prefHeight="17.0" prefWidth="223.0" />
-      <Label fx:id="removedAccountLabel" layoutX="340.0" layoutY="320.0" prefHeight="117.0" prefWidth="310.0" />
+      <Label fx:id="depWithLabel" layoutX="403.0" layoutY="309.0" prefHeight="17.0" prefWidth="223.0" />
+      <Label fx:id="removedAccountLabel" layoutX="400.0" layoutY="319.0" prefHeight="117.0" prefWidth="310.0" />
+      <Label layoutX="122.0" layoutY="25.0" prefHeight="17.0" prefWidth="104.0" text="Customers">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

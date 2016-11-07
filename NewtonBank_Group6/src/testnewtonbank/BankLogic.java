@@ -19,11 +19,14 @@ import java.util.Objects;
  */
 public class BankLogic {
 
-    private static BankLogic p = new BankLogic();
+    private static BankLogic p = null;
     private ArrayList<Customer> customerList = new ArrayList();
     private Customer d;
 
     public static BankLogic getInstanceOf() {
+        if (p == null) {
+            p = new BankLogic();
+        }
         return p;
     }
 
@@ -91,17 +94,20 @@ public class BankLogic {
 
     public boolean deposit(Long ssn, int accountNo, double amount) {
         boolean flag = false;
-        for (Customer c : customerList) {
-            if (c.getSsn() == ssn) {
-                for (SavingsAccount sa : c.getNumberOfAccount()) {
-                    if (sa.getAccountNo() == accountNo) {
-                        sa.setBalance(sa.getBalance() + amount);
-                        flag = true;
-                    }
+        if (amount > 0) {
+            for (Customer c : customerList) {
+                if (c.getSsn() == ssn) {
+                    for (SavingsAccount sa : c.getNumberOfAccount()) {
+                        if (sa.getAccountNo() == accountNo) {
+                            sa.setBalance(sa.getBalance() + amount);
+                            flag = true;
+                        }
 
+                    }
                 }
             }
         }
+
         return flag;
     }
 
@@ -162,19 +168,21 @@ public class BankLogic {
 //----------------------------------------------------------------------
     public boolean withdraw(long ssn, int accountNo, double amount) {
         boolean flag = false;
-
-        for (Customer customer : customerList) {
-            if (ssn == customer.getSsn()) { //Hämtar kunden person nr.           
-                for (SavingsAccount account : customer.getNumberOfAccount()) {
-                    if (accountNo == account.getAccountNo()) {
-                        if (amount <= account.getBalance()) {
-                            account.setBalance(account.getBalance() - amount);
-                            flag = true;
+        if (amount > 0) {
+            for (Customer customer : customerList) {
+                if (ssn == customer.getSsn()) { //Hämtar kunden person nr.           
+                    for (SavingsAccount account : customer.getNumberOfAccount()) {
+                        if (accountNo == account.getAccountNo()) {
+                            if (amount <= account.getBalance()) {
+                                account.setBalance(account.getBalance() - amount);
+                                flag = true;
+                            }
                         }
                     }
                 }
             }
         }
+
         return flag;
     }
 

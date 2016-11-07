@@ -38,11 +38,11 @@ private void editName(ActionEvent event) throws IOException {
         message.setVisible(true);
         message.setTextFill(Color.web("red"));
         message.setText("Please enter a name");
-    } else if(!newName.getText().matches("[a-zA-Z ]+")){
+    } else if(!newName.getText().matches("[a-zA-ZåäöÅÄÖ ]+")){
         message.setVisible(true);
         message.setTextFill(Color.web("red"));
         message.setText("The name can't have any numbers or symbols in it");
-    } else if(newName.getText().matches("[a-zA-Z ]+")){
+    } else if(newName.getText().matches("[a-zA-ZåäöÅÄÖ ]+")){
         String name = newName.getText();
     checkAccountController.getTempCust().setName(name);
     

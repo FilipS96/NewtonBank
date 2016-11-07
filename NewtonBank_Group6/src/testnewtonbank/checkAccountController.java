@@ -117,6 +117,7 @@ public class checkAccountController implements Initializable {
         depositWithdraw.setVisible(false);
         removedAccountLabel.setVisible(false);
         if (cust.getSelectionModel().getSelectedItem() != null) {
+            changeName.setVisible(true);
             removeCust.setVisible(true);
             accountView.setVisible(true);
             addSavingsAcc.setVisible(true);
@@ -224,13 +225,10 @@ public class checkAccountController implements Initializable {
     @FXML
     private void withdraw(ActionEvent event) {
         depWithLabel.setVisible(false);
-        if (!amount.getText().matches("[-+]?[0-9]*.?[0-9]+")) {
-            depWithLabel.setVisible(true);
-            depWithLabel.setTextFill(Color.web("red"));
-            depWithLabel.setText("Please enter a valid number");
-        } else {
+        boolean b = false;
+        if (amount.getText().matches("[-+]?[0-9]*.?[0-9]+") && !amount.getText().substring(0, 1).equals("-")) {
             double amount2 = Double.parseDouble(amount.getText());
-            boolean b = p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+            b = p.withdraw(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
             if (b) {
                 depWithLabel.setVisible(true);
                 depWithLabel.setText("Withdrawal succeeded");
@@ -239,16 +237,42 @@ public class checkAccountController implements Initializable {
                 depWithLabel.setVisible(true);
                 depWithLabel.setText("Your balance is too low");
                 depWithLabel.setTextFill(Color.web("red"));
+
             }
-            System.out.println(tempAccount.getBalance());
-            showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+        } else {
+            depWithLabel.setVisible(true);
+            depWithLabel.setTextFill(Color.web("red"));
+            depWithLabel.setText("Please enter a valid number");
         }
+
+        System.out.println(tempAccount.getBalance());
+        showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
         amount.clear();
     }
 
     @FXML
     private void deposit(ActionEvent event) {
         depWithLabel.setVisible(false);
+        boolean b = false;
+        if (amount.getText().matches("[-+]?[0-9]*.?[0-9]+")) {
+            double amount2 = Double.parseDouble(amount.getText());
+            b = p.deposit(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
+        }
+
+        if (!b) {
+            depWithLabel.setVisible(true);
+            depWithLabel.setTextFill(Color.web("red"));
+            depWithLabel.setText("Please enter a valid number");
+        } else {
+
+            System.out.println(tempAccount.getAccountNo());
+            System.out.println(tempAccount.getBalance());
+            showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
+            depWithLabel.setVisible(true);
+            depWithLabel.setTextFill(Color.web("green"));
+            depWithLabel.setText("Deposit succeeded");
+        }
+        /*
         if (!amount.getText().matches("[-+]?[0-9]*.?[0-9]+")) {
             depWithLabel.setVisible(true);
             depWithLabel.setTextFill(Color.web("red"));
@@ -263,7 +287,7 @@ public class checkAccountController implements Initializable {
             depWithLabel.setTextFill(Color.web("green"));
             depWithLabel.setText("Deposit succeeded");
         }
-
+         */
         amount.clear();
 
     }
@@ -312,24 +336,33 @@ public class checkAccountController implements Initializable {
         System.out.println(addHardCodedCostumers);
         if (addHardCodedCostumers == 0) {
 
-            p.addCustomer("Hampus", 199112253519L);
+            p.addCustomer("Hampus Karlsson", 199112253519L);
             p.addSavingsAccount(199112253519L);
             p.addSavingsAccount(199112253519L);
             p.addSavingsAccount(199112253519L);
-            p.addCustomer("Joel", 199112245401L);
+            p.addCustomer("Joel Nilsson", 199112245401L);
             p.addSavingsAccount(199112245401L);
             p.addSavingsAccount(199112245401L);
-            p.addCustomer("Alexiz", 199112253192L);
+            p.addCustomer("Alexiz Knöös", 199112253192L);
             p.addSavingsAccount(199112253192L);
             p.addSavingsAccount(199112253192L);
             p.addSavingsAccount(199112253192L);
             p.addSavingsAccount(199112253192L);
+            p.addCustomer("Tollo Nanthanonsa", 190112031234L);
+            p.addSavingsAccount(190112031234L);
+            p.addSavingsAccount(190112031234L);
+            p.addCustomer("Filip Stojanivski", 200001019876L);
+            p.addSavingsAccount(200001019876L);
+            p.addSavingsAccount(200001019876L);
+            p.addCustomer("Masoud Haya", 193704216543L);
+            p.addSavingsAccount(193704216543L);
+            p.addSavingsAccount(193704216543L);
 
             System.out.println(addHardCodedCostumers);
 
         }
         addHardCodedCostumers++;
-
+        changeName.setVisible(false);
         removedAccountLabel.setVisible(false);
         removeCust.setVisible(false);
         depWithLabel.setVisible(false);
