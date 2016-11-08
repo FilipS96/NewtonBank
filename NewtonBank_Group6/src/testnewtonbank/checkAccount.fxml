@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +19,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testnewtonbank.checkAccountController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testnewtonbank.checkAccountController">
     <children>
       <ListView fx:id="cust" layoutX="120.0" layoutY="48.0" onMouseClicked="#seeAccountInfo" prefHeight="414.0" prefWidth="268.0" />
       <Label fx:id="showName" layoutX="396.0" layoutY="43.0" prefHeight="17.0" prefWidth="200.0" />
@@ -31,7 +37,7 @@
             <TextField fx:id="amount" prefHeight="27.0" prefWidth="68.0" promptText="Amount" />
             <Button mnemonicParsing="false" onAction="#withdraw" text="Withdraw">
                <textFill>
-                  <RadialGradient centerX="0.7134831460674157" centerY="0.798076923076923" radius="0.5">
+                  <RadialGradient centerX="0.5056179775280899" centerY="0.6826923076923077" radius="0.5">
                      <stops>
                         <Stop color="#f80000" />
                         <Stop color="#141313" offset="1.0" />
@@ -41,7 +47,7 @@
             </Button>
             <Button mnemonicParsing="false" onAction="#deposit" prefHeight="27.0" prefWidth="74.0" text="Deposit">
                <textFill>
-                  <RadialGradient centerX="0.7134831460674157" centerY="0.798076923076923" radius="0.5">
+                  <RadialGradient centerX="0.5617977528089888" centerY="0.6875" radius="0.5">
                      <stops>
                         <Stop color="#f80000" />
                         <Stop color="#141313" offset="1.0" />
@@ -55,7 +61,7 @@
          <children>
             <Button fx:id="removeSavingsAcc" mnemonicParsing="false" onAction="#removeSavingAcc" prefHeight="27.0" prefWidth="90.0" text="Remove">
                <textFill>
-                  <RadialGradient centerX="0.7134831460674157" centerY="0.798076923076923" radius="0.5">
+                  <RadialGradient centerX="0.5561797752808989" centerY="0.6971153846153846" radius="0.5">
                      <stops>
                         <Stop color="#f80000" />
                         <Stop color="#141313" offset="1.0" />
@@ -68,7 +74,7 @@
             </Button>
             <Button fx:id="addSavingsAcc" mnemonicParsing="false" onAction="#addSavingsAcc" prefHeight="27.0" prefWidth="91.0" text="Add">
                <textFill>
-                  <RadialGradient centerX="0.7134831460674157" centerY="0.798076923076923" radius="0.5">
+                  <RadialGradient centerX="0.5449438202247191" centerY="0.6875" radius="0.5">
                      <stops>
                         <Stop color="#f80000" />
                         <Stop color="#141313" offset="1.0" />
@@ -85,7 +91,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#addCustomer" prefHeight="27.0" prefWidth="153.0" text="Add">
                <textFill>
-                  <RadialGradient centerX="0.7134831460674157" centerY="0.798076923076923" radius="0.5">
+                  <RadialGradient centerX="0.5393258426966292" centerY="0.6923076923076923" radius="0.5">
                      <stops>
                         <Stop color="#f80000" />
                         <Stop color="#141313" offset="1.0" />
@@ -93,16 +99,32 @@
                   </RadialGradient>
                </textFill>
             </Button>
-            <Button mnemonicParsing="false" onAction="#saveTxt" prefHeight="27.0" prefWidth="125.0" text="Save .txt" />
-            <Button fx:id="changeName" mnemonicParsing="false" onAction="#editName" prefHeight="27.0" prefWidth="114.0" text="Change name" />
-            <Button fx:id="removeCust" mnemonicParsing="false" onAction="#removeCust" prefHeight="27.0" prefWidth="125.0" text="Remove">
+            <Button mnemonicParsing="false" onAction="#saveTxt" prefHeight="27.0" prefWidth="125.0" text="Save .txt">
                <textFill>
-                  <LinearGradient endY="0.23557692307692313">
+                  <RadialGradient centerX="0.5393258426966292" centerY="0.6923076923076923" radius="0.5">
                      <stops>
                         <Stop color="#f80000" />
                         <Stop color="#141313" offset="1.0" />
                      </stops>
-                  </LinearGradient>
+                  </RadialGradient>
+               </textFill></Button>
+            <Button fx:id="changeName" mnemonicParsing="false" onAction="#editName" prefHeight="27.0" prefWidth="114.0" text="Change name">
+               <textFill>
+                  <RadialGradient centerX="0.5393258426966292" centerY="0.6923076923076923" radius="0.5">
+                     <stops>
+                        <Stop color="#f80000" />
+                        <Stop color="#141313" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill></Button>
+            <Button fx:id="removeCust" mnemonicParsing="false" onAction="#removeCust" prefHeight="27.0" prefWidth="125.0" text="Remove">
+               <textFill>
+                  <RadialGradient centerX="0.5393258426966292" centerY="0.6923076923076923" radius="0.5">
+                     <stops>
+                        <Stop color="#f80000" />
+                        <Stop color="#141313" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
                </textFill>
             </Button>
          </children>

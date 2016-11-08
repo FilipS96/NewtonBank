@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package testnewtonbank;
 
 import java.io.IOException;
@@ -25,10 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-/**
- *
- * @author skate
- */
 public class FXMLDocumentController implements Initializable {
 
     BankLogic p = BankLogic.getInstanceOf();
@@ -62,20 +53,20 @@ public class FXMLDocumentController implements Initializable {
 
             if (ssn.getText().isEmpty() || name.getText().isEmpty()) {
                 label.setTextFill(Color.web("red"));
-                label.setText("Please you need to enter a name");
+                label.setText("Please, you need to enter a name");
             } else if (!name.getText().matches("[a-zA-ZåäöÅÄÖ ]+")) {
                 label.setTextFill(Color.web("red"));
                 label.setText("You cant have a number in your name");
             } else if (String.valueOf(ssn.getText()).length() != 12) {
                 label.setTextFill(Color.web("red"));
-                label.setText("Please enter a 10 digit social security number.");
+                label.setText("Please enter Your 10 digit Social security number.");
             } else if (Integer.parseInt(ssn.getText().substring(0, 4)) > 2016 || Integer.parseInt(ssn.getText().substring(0, 4)) < 1900) {
                 label.setTextFill(Color.web("red"));
                 label.setText("You need to enter a year between 1900 and 2016");
             } else if (Integer.parseInt(ssn.getText().substring(4, 6)) > 12 || Integer.parseInt(ssn.getText().substring(4, 6)) < 1) {
                 label.setTextFill(Color.web("red"));
                 label.setText("Please enter a month between 01-12");
-                System.out.println(ssn.getText().substring(4, 6));
+               
             } else {
                 if (p.addCustomer(name.getText(), Long.parseLong(ssn.getText()))) {
 

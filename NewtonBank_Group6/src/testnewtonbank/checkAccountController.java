@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package testnewtonbank;
 
 import java.io.IOException;
@@ -44,12 +39,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-//import static testnewtonbank.FXMLDocumentController.p;
 
-/**
- *
- * @author skate
- */
 public class checkAccountController implements Initializable {
 
     @FXML
@@ -121,7 +111,6 @@ public class checkAccountController implements Initializable {
             removeCust.setVisible(true);
             accountView.setVisible(true);
             addSavingsAcc.setVisible(true);
-//            accountView.setItems(null);
             accounts.clear();
 
             for (Customer c : p.getCustomerList()) {
@@ -167,7 +156,7 @@ public class checkAccountController implements Initializable {
 
                 if (Integer.parseInt(str.substring(0, 4)) == a.getAccountNo()) {
                     tempAccount = a;
-                    System.out.println(str);
+                  
                     showNr.setText("Number:\t" + a.getAccountNo());
 
                     showBalance.setText("Balance:\t" + a.getBalance());
@@ -235,7 +224,7 @@ public class checkAccountController implements Initializable {
                 depWithLabel.setTextFill(Color.web("green"));
             } else {
                 depWithLabel.setVisible(true);
-                depWithLabel.setText("Your balance is too low");
+                depWithLabel.setText("You cant withdraw that much");
                 depWithLabel.setTextFill(Color.web("red"));
 
             }
@@ -245,7 +234,7 @@ public class checkAccountController implements Initializable {
             depWithLabel.setText("Please enter a valid number");
         }
 
-        System.out.println(tempAccount.getBalance());
+      
         showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
         amount.clear();
     }
@@ -265,29 +254,13 @@ public class checkAccountController implements Initializable {
             depWithLabel.setText("Please enter a valid number");
         } else {
 
-            System.out.println(tempAccount.getAccountNo());
-            System.out.println(tempAccount.getBalance());
+           
             showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
             depWithLabel.setVisible(true);
             depWithLabel.setTextFill(Color.web("green"));
             depWithLabel.setText("Deposit succeeded");
         }
-        /*
-        if (!amount.getText().matches("[-+]?[0-9]*.?[0-9]+")) {
-            depWithLabel.setVisible(true);
-            depWithLabel.setTextFill(Color.web("red"));
-            depWithLabel.setText("Please enter a valid number");
-        } else {
-            double amount2 = Double.parseDouble(amount.getText());
-            System.out.println(tempAccount.getAccountNo());
-            p.deposit(tempCust.getSsn(), tempAccount.getAccountNo(), amount2);
-            System.out.println(tempAccount.getBalance());
-            showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
-            depWithLabel.setVisible(true);
-            depWithLabel.setTextFill(Color.web("green"));
-            depWithLabel.setText("Deposit succeeded");
-        }
-         */
+       
         amount.clear();
 
     }
@@ -306,7 +279,6 @@ public class checkAccountController implements Initializable {
         }
         checkAccountController.accounts = FXCollections.observableArrayList(newAccounts);
         accountView.setItems(accounts);
-        //accountView.setSelectionModel();
 
     }
 
@@ -333,7 +305,7 @@ public class checkAccountController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(addHardCodedCostumers);
+        
         if (addHardCodedCostumers == 0) {
 
             p.addCustomer("Hampus Karlsson", 199112253519L);
@@ -351,15 +323,14 @@ public class checkAccountController implements Initializable {
             p.addCustomer("Tollo Nanthanonsa", 190112031234L);
             p.addSavingsAccount(190112031234L);
             p.addSavingsAccount(190112031234L);
-            p.addCustomer("Filip Stojanivski", 200001019876L);
+            p.addCustomer("Filip Stojanovski", 200001019876L);
             p.addSavingsAccount(200001019876L);
             p.addSavingsAccount(200001019876L);
             p.addCustomer("Masoud Haya", 193704216543L);
             p.addSavingsAccount(193704216543L);
             p.addSavingsAccount(193704216543L);
 
-            System.out.println(addHardCodedCostumers);
-
+           
         }
         addHardCodedCostumers++;
         changeName.setVisible(false);
