@@ -1,6 +1,7 @@
 
 package testnewtonbank;
 
+import Repository.DBConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedWriter;
@@ -15,6 +16,7 @@ public class BankLogic {
     private static BankLogic p = null;
     private ArrayList<Customer> customerList = new ArrayList();
     private Customer d;
+    DBConnection conn = new DBConnection();
 
     public static BankLogic getInstanceOf() {
         if (p == null) {
@@ -24,7 +26,7 @@ public class BankLogic {
     }
 
     private BankLogic() {
-
+        customerList = conn.getCustomerList();
     }
 
     public ArrayList<Customer> getCustomerList() {
@@ -48,6 +50,7 @@ public class BankLogic {
 
         if (flag) {
             customerList.add(new Customer(name, ssn));
+            conn.addCustomer(name, ssn);
         }
 
         return flag;
@@ -72,8 +75,11 @@ public class BankLogic {
     public int addSavingsAccount(long ssn) {
         boolean flag = false;
         SavingsAccount sa = new SavingsAccount();
+        
         for (Customer c : customerList) {
             if (c.getSsn().equals(ssn)) {
+                conn.addSavingsAccount(sa.increaseCounter(), sa.getBalance(), ssn, sa.getAccountTypeId());
+                //System.out.println(sa.increaseCounter());
                 c.getNumberOfAccount().add(sa);
                 flag = true;
             }
@@ -84,14 +90,25 @@ public class BankLogic {
             return sa.getAccountNo();
         }
     }
+    
+    public ArrayList<SavingsAccount> getAccounts(long ssn){
+        ArrayList<SavingsAccount> accountList = new ArrayList();
+        for (Customer c : customerList) {
+            if (c.getSsn().equals(ssn)){
+                accountList = conn.getNumberOfAccount(ssn);
+            }
+        }
+        return accountList;
+    }
 
     public boolean deposit(Long ssn, int accountNo, double amount) {
         boolean flag = false;
         if (amount > 0) {
             for (Customer c : customerList) {
-                if (c.getSsn() == ssn) {
+                if (Objects.equals(c.getSsn(), ssn)) {
                     for (SavingsAccount sa : c.getNumberOfAccount()) {
                         if (sa.getAccountNo() == accountNo) {
+                            conn.deposit(accountNo, amount);
                             sa.setBalance(sa.getBalance() + amount);
                             flag = true;
                         }
@@ -118,21 +135,23 @@ public class BankLogic {
             }
 
         }
+        conn.removeCustomer(temp.getSsn());
         customerList.remove(temp);
-
+        
         return rm;
 
     }
+    
+    
 
     public boolean changeCustomerName(String name, long ssn) {
 
         for (Customer c : customerList) {
-            if (c.getSsn() == ssn) {
+            if (c.getSsn().equals(ssn)) {
                 c.setName(name);
+                conn.setName(ssn, name);
                 return true;
-            } else {
-                return false;
-            }
+            } 
         }
 
         return false;
@@ -152,6 +171,11 @@ public class BankLogic {
         }
         return null;
     }
+    
+    public int getLatestAccountNo() {
+        return conn.getLatestAccountNo();
+    }
+    
 
     //----------------------------------------------------------------------
 // Beskrivning: gör ett uttag på kontonummer med accountNo som
@@ -167,6 +191,7 @@ public class BankLogic {
                     for (SavingsAccount account : customer.getNumberOfAccount()) {
                         if (accountNo == account.getAccountNo()) {
                             if (amount <= account.getBalance()) {
+                                conn.withdraw(accountNo, amount);
                                 account.setBalance(account.getBalance() - amount);
                                 flag = true;
                             }
@@ -203,6 +228,7 @@ public class BankLogic {
         }
         if (flag) {
             String result = "" + s.getClosingBalance();
+            conn.removeAccount(s.getAccountNo());
             ce.getNumberOfAccount().remove(s);
             return "Balance including interest: " + result;
         } else {

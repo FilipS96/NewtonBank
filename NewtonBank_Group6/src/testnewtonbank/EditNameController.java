@@ -44,9 +44,10 @@ private void editName(ActionEvent event) throws IOException {
         message.setText("The name can't have any numbers or symbols in it");
     } else if(newName.getText().matches("[a-zA-ZåäöÅÄÖ ]+")){
         String name = newName.getText();
-    checkAccountController.getTempCust().setName(name);
+        p.changeCustomerName(name, checkAccountController.getTempCust().getSsn());
+        //checkAccountController.getTempCust().setName(name);
     
-    Parent root = FXMLLoader.load(getClass().getResource("checkAccount.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("checkAccount.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

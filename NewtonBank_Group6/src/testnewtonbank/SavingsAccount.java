@@ -1,29 +1,36 @@
 package testnewtonbank;
 
+import Repository.DBConnection;
+import static testnewtonbank.BankLogic.getInstanceOf;
+
 public class SavingsAccount {
     private double balance;
     private double interestRate;
-    private double interest;
     private String accountType;
+    private final int accountTypeId = 1;
     private int accountNo;
-    private static int accountCounter = 1000;
+    BankLogic p = getInstanceOf();
+
 
     public SavingsAccount() { //Ingenting behövs tas emot när man skapar ett konto. Man får använda deposit för att sätta in pengar.
         balance = 0;
         interestRate = 1;
         accountType = "Savings account";
-        accountCounter++;
-        accountNo = accountCounter;
+        
     }
 
     public double getBalance() {
+        //balance = conn.getBalance(accountNo);
         return balance;
     }
 
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
+    public int increaseCounter(){
+        accountNo = p.getLatestAccountNo() + 1;
+        return accountNo;
+    }
     public double getInterestRate() {
         return interestRate;
     }
@@ -52,13 +59,10 @@ public class SavingsAccount {
         this.accountNo = accountNo;
     }
 
-    public static int getAccountCounter() {
-        return accountCounter;
+    public int getAccountTypeId() {
+        return accountTypeId;
     }
-
-    public static void setAccountCounter(int accountCounter) {
-        SavingsAccount.accountCounter = accountCounter;
-    }
+    
     
     @Override
     public String toString(){

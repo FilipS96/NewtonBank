@@ -2,23 +2,6 @@ package testnewtonbank;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -43,8 +26,8 @@ import javafx.stage.Stage;
 public class checkAccountController implements Initializable {
 
     @FXML
-    BankLogic p = BankLogic.getInstanceOf();
-    public static int addHardCodedCostumers = 0;
+    BankLogic p;
+    public static int runOnce = 0;
     private static Customer tempCust = new Customer();
     private SavingsAccount tempAccount = new SavingsAccount();
     private static List<String> closingInfo = new ArrayList();
@@ -114,7 +97,6 @@ public class checkAccountController implements Initializable {
             accounts.clear();
 
             for (Customer c : p.getCustomerList()) {
-
                 String str = (String) cust.getSelectionModel().getSelectedItem();
 
                 if (str.substring(str.length() - 12, str.length()).equals(String.valueOf(c.getSsn()))) {
@@ -156,7 +138,7 @@ public class checkAccountController implements Initializable {
 
                 if (Integer.parseInt(str.substring(0, 4)) == a.getAccountNo()) {
                     tempAccount = a;
-                  
+
                     showNr.setText("Number:\t" + a.getAccountNo());
 
                     showBalance.setText("Balance:\t" + a.getBalance());
@@ -234,7 +216,6 @@ public class checkAccountController implements Initializable {
             depWithLabel.setText("Please enter a valid number");
         }
 
-      
         showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
         amount.clear();
     }
@@ -254,13 +235,12 @@ public class checkAccountController implements Initializable {
             depWithLabel.setText("Please enter a valid number");
         } else {
 
-           
             showBalance.setText("Balance:\t" + String.valueOf(tempAccount.getBalance()));
             depWithLabel.setVisible(true);
             depWithLabel.setTextFill(Color.web("green"));
             depWithLabel.setText("Deposit succeeded");
         }
-       
+
         amount.clear();
 
     }
@@ -305,34 +285,13 @@ public class checkAccountController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        if (addHardCodedCostumers == 0) {
-
-            p.addCustomer("Hampus Karlsson", 199112253519L);
-            p.addSavingsAccount(199112253519L);
-            p.addSavingsAccount(199112253519L);
-            p.addSavingsAccount(199112253519L);
-            p.addCustomer("Joel Nilsson", 199112245401L);
-            p.addSavingsAccount(199112245401L);
-            p.addSavingsAccount(199112245401L);
-            p.addCustomer("Alexiz Knöös", 199112253192L);
-            p.addSavingsAccount(199112253192L);
-            p.addSavingsAccount(199112253192L);
-            p.addSavingsAccount(199112253192L);
-            p.addSavingsAccount(199112253192L);
-            p.addCustomer("Tollo Nanthanonsa", 190112031234L);
-            p.addSavingsAccount(190112031234L);
-            p.addSavingsAccount(190112031234L);
-            p.addCustomer("Filip Stojanovski", 200001019876L);
-            p.addSavingsAccount(200001019876L);
-            p.addSavingsAccount(200001019876L);
-            p.addCustomer("Masoud Haya", 193704216543L);
-            p.addSavingsAccount(193704216543L);
-            p.addSavingsAccount(193704216543L);
-
-           
+        p = BankLogic.getInstanceOf();
+        if (runOnce == 0) {
+            for (Customer c : p.getCustomerList()) {
+                c.setNumberOfAccount(p.getAccounts(c.getSsn()));
+            }
         }
-        addHardCodedCostumers++;
+        runOnce++;
         changeName.setVisible(false);
         removedAccountLabel.setVisible(false);
         removeCust.setVisible(false);
@@ -346,6 +305,8 @@ public class checkAccountController implements Initializable {
         showInterest.setVisible(false);
 
         checkAccountController.customer = FXCollections.observableArrayList(p.getCustomers());
+        
+
         cust.setItems(customer);
 
     }

@@ -1,5 +1,6 @@
 package testnewtonbank;
 
+import Repository.DBConnection;
 import java.util.ArrayList;
 
 public class Customer {
@@ -17,6 +18,7 @@ public class Customer {
     }
 
     public ArrayList<SavingsAccount> getNumberOfAccount() {
+        //numberOfAccount = conn.getNumberOfAccount(ssn);
         return numberOfAccount;
     }
 
@@ -24,8 +26,6 @@ public class Customer {
         this.numberOfAccount = numberOfAccount;
     }
     
-    
-
     public Long getSsn() {
         return ssn;
     }
